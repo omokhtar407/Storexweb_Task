@@ -1,0 +1,202 @@
+<ngx-spinner
+  bdColor="#000"
+  size="medium"
+  color="white"
+  type="ball-clip-rotate-pulse"
+  [fullScreen]="true"
+>
+  <p class="ngx_spinner">Loading...</p>
+</ngx-spinner>
+
+<section class="pad-top">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <button class="float-end btn main_btn" data-bs-toggle="modal" data-bs-target="#CreateMovie">Create Movie</button>
+      </div>
+      <div class="col-lg-3 col-sm-4">
+        <h4 class="fw-bold">Categories</h4>
+        <ul class="categories">
+          <li class="categoryActive" (click)="AllMovies(); categoryActive($event)">All</li>
+          <li *ngFor="let cate of allCategories"   (click)="showMovByCategory(cate.id) ; categoryActive($event)">{{cate.name}}</li>
+        </ul>
+      </div>
+      <div class="col-lg-9 col-sm-8">
+        <div  class="row g-5 mt-0">
+          <p class="no_movie" *ngIf="allMovies.length == 0">{{noMovies}}</p>
+          <div *ngFor="let movie of allMovies" class="col-lg-3 col-sm-6 movie-container">
+            <div class="mov-info">
+              <div class="tools">
+                <span><i class="fas fa-pen-square" (click)="setValue(movie.id)" data-bs-toggle="modal" data-bs-target="#EditMovie"></i></span>
+                <span><i class="far fa-trash-alt" (click)="deleteMovie('delete',movie.id)"></i></span>
+              </div>
+              <img [src]="imgPrefix+movie.image" [alt]="movie.name">
+              <h5>{{movie.name}}</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Create Movie -->
+ <div class="modal fade" id="CreateMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <form [formGroup]="createMovieForm" (ngSubmit)="CreateMovie()" >
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold " id="exampleModalLabel">Create Movie</h5>
+          <i class="fas fa-times fa-2x"  data-bs-dismiss="modal" aria-label="Close"></i>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12">
+                <input formControlName = 'name' type="text" placeholder="Movie Name" class="form-control my-3 rounded-0">
+                <div *ngIf="
+                    createMovieForm.get('name')?.errors != null &&
+                    createMovieForm.get('name')?.touched
+                  "
+                  class="text-danger">
+                  <p *ngIf="createMovieForm.get('name')?.errors?.required">
+                    Name is required
+                  </p>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <input formControlName = 'category_id' type="text" (change)="checkCategoryId($event)" placeholder="Category Id" class="form-control my-3 rounded-0">
+
+                <div *ngIf="
+                  createMovieForm.get('category_id')?.errors != null &&
+                  createMovieForm.get('category_id')?.touched
+                "
+                  class="text-danger">
+                  <p *ngIf="createMovieForm.get('category_id')?.errors?.required">
+                    Category is required
+                  </p>
+                </div>
+                <p *ngIf="category_id_msg" [ngClass]="category_id_msg ? 'text-danger' : '' ">
+                  The selected category id is invalid
+                </p>
+              </div>
+
+              <div class="col-md-12">
+                <div><img class="imgUploaded mb-2" [src]="url_upload_img" *ngIf="url_upload_img" [alt]="url_upload_img"></div>
+                <div [innerHtml]='img_upload_Msg' *ngIf="img_upload_Msg" [ngClass]="img_upload_Msg ? 'text-danger' : '' "></div>
+
+              </div>
+              <div class="col-md-12">
+                <input formControlName = 'image' type="file" (change)="selectFile($event)"  placeholder="Choose Image" class="form-control my-3 rounded-0">
+              </div>
+              <div class="col-md-12">
+                <textarea formControlName = 'description' placeholder="Movie Description" class="form-control my-3 rounded-0" cols="20" rows="5"></textarea>
+                <div
+                  *ngIf="
+                    createMovieForm.get('description')?.errors != null &&
+                    createMovieForm.get('description')?.touched
+                  "
+                  class="text-danger">
+                  <p *ngIf="createMovieForm.get('description')?.errors?.required">
+                    Description is required
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn bg-danger text-white fw-bold "  [disabled]="createMovieForm.invalid">Create</button>
+          <button type="button" class="btn bg-dark text-white fw-bold " data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- End -->
+
+
+ <!-- Edit Movie -->
+ <div class="modal fade" id="EditMovie" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true fa-2x">
+  <div class="modal-dialog">
+    <form [formGroup]="EditMovie" (ngSubmit)="editMovie()">
+      <div class="modal-content ">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="exampleModalLabel">Edit Movie</h5>
+          <i class="fas fa-times"  data-bs-dismiss="modal" aria-label="Close"></i>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">
+
+              <input formControlName = 'movie_id' id="movie-id" type="text" class="form-control my-3 rounded-0" hidden>
+
+              <div class="col-md-12">
+                <input formControlName = 'name' type="text" placeholder="Movie Name" class="form-control my-3 rounded-0">
+               <div *ngIf="
+                    EditMovie.get('name')?.errors != null &&
+                    EditMovie.get('name')?.touched
+                  "
+                  class="text-danger">
+                    <p *ngIf="EditMovie.get('name')?.errors?.required">
+                      Name is required
+                    </p>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <input formControlName = 'category_id' type="text" (change)="checkCategoryId($event)" placeholder="Category Id" class="form-control my-3 rounded-0">
+
+                <div *ngIf="
+                    EditMovie.get('category_id')?.errors != null &&
+                    EditMovie.get('category_id')?.touched
+                  "
+                  class="text-danger">
+                    <p *ngIf="EditMovie.get('category_id')?.errors?.required">
+                      Category is required
+                    </p>
+                </div>
+                <p *ngIf="category_id_msg" [ngClass]="category_id_msg ? 'text-danger' : '' ">
+                  Category is not exist
+                </p>
+              </div>
+
+              <div class="col-md-12">
+                <div><img class="imgUploaded mb-2"  [src]="url_upload_img" *ngIf="url_upload_img" [alt]="url_upload_img"></div>
+                <div [innerHtml]='img_upload_Msg' *ngIf="img_upload_Msg" [ngClass]="img_upload_Msg ? 'text-danger' : '' "></div>
+
+              </div>
+              <div class="col-md-12">
+                <input formControlName = 'image' type="file" (change)="selectFile($event)"  placeholder="Choose Image" class="form-control my-3 rounded-0">
+              </div>
+              <div class="col-md-12">
+                <textarea formControlName = 'description' placeholder="Movie Description" class="form-control my-3 rounded-0" cols="20" rows="5"></textarea>
+                <div *ngIf="
+                    EditMovie.get('description')?.errors != null &&
+                    EditMovie.get('description')?.touched
+                  "
+                  class="text-danger">
+                  <p *ngIf="EditMovie.get('description')?.errors?.required">
+                    Description is required
+                  </p>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <input formControlName = '_method' type="text" placeholder="put" class="put form-control my-3 rounded-0">
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class=" btn bg-danger text-white fw-bold " [disabled]="EditMovie.invalid">Edit</button>
+          <button type="button" class="btn bg-dark text-white fw-bold " data-bs-dismiss="modal">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<!-- End -->
+
+
+

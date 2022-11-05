@@ -1,0 +1,87 @@
+<section id="registerForm" class="pad-top">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-6">
+        <div class="register_form">
+          <h1 class="mb-4">Register</h1>
+          <form [formGroup]="registerForm" (ngSubmit)="submitRegForm(registerForm)">
+            <div class="group mb-4">
+              <input
+                formControlName="name"
+                class="form-control mb-2 rounded-0"
+                name="name"
+                type="text"
+                id="name"
+                placeholder="Name"
+              />
+
+              <div
+                *ngIf="
+                  registerForm.get('name')?.errors != null &&
+                  registerForm.get('name')?.touched
+                "
+                class="text-danger"
+              >
+                <p *ngIf="registerForm.get('name')?.errors?.required">
+                      name is required
+                </p>
+              </div>
+            </div>
+
+            <div class="group mb-4">
+              <input
+              formControlName="email"
+                class="form-control mb-2 rounded-0"
+                name="email"
+                type="text"
+                id="email"
+                placeholder="Email"
+              />
+
+              <div
+                  *ngIf="
+                    registerForm.get('email')?.errors != null &&
+                    registerForm.get('email')?.touched
+                  "
+                  class="text-danger"
+                >
+                  <p *ngIf="registerForm.get('email')?.errors?.required">
+                    Email is required
+                  </p>
+                  <p *ngIf="registerForm.get('email')?.errors?.pattern">
+                    Email is invalid
+                  </p>
+              </div>
+            </div>
+
+            <div class="group mb-4">
+              <input
+              formControlName="password"
+                class="form-control mb-2 rounded-0"
+                name="password"
+                type="text"
+                id="password"
+                placeholder="Password"
+              />
+
+              <div
+                  *ngIf="
+                    registerForm.get('password')?.errors != null &&
+                    registerForm.get('password')?.touched
+                  "
+                  class="text-danger"
+              >
+                  <p *ngIf="registerForm.get('password')?.errors?.required">
+                    Password is required
+                  </p>
+              </div>
+            </div>
+
+            <button [disabled]="registerForm.invalid" class="btn btn-danger" type="submit">register</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

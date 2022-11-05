@@ -1,0 +1,62 @@
+<!-- Start Nav -->
+<nav class="navbar navbar-expand-md position-fixed w-100">
+  <div class="container">
+    <a class="navbar-brand"  routerLink="">
+      Movies
+    </a>
+    <button class="navbar-toggler border-0" type="button">
+      <span class="text-white"
+        ><i
+          (click)="showCollapse()"
+          *ngIf="!isToggle"
+          class="fas fa-bars bar-ico"
+        ></i
+        ><i
+          (click)="hideCollapse()"
+          *ngIf="isToggle"
+          class="fas fa-times bar-ico"
+        ></i
+      ></span>
+    </button>
+    <div class="collapse navbar-collapse w-100 justify-content-between">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a
+            (click) ="hideCollapse()"
+            *ngIf="isLogin"
+            class="nav-link "
+            routerLink="movies"
+          >Movies</a>
+        </li>
+      </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a
+            (click) ="logout(); hideCollapse()"
+            *ngIf="isLogin"
+            class="main_btn"
+            routerLink=""
+          >logout</a>
+        </li>
+        <li class="nav-item m-1">
+          <a
+          *ngIf="!isLogin"
+          (click)="hideCollapse()"
+            class="active main_btn"
+            aria-current="page"
+            routerLink="register"
+          >Register</a>
+        </li>
+        <li class="nav-item m-1">
+          <a
+          *ngIf="!isLogin"
+          (click)="hideCollapse()"
+            class="main_btn"
+            routerLink="login"
+          >Login</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- End Nav -->

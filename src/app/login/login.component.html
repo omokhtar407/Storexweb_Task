@@ -1,0 +1,75 @@
+<ngx-spinner
+  bdColor="#000"
+  size="medium"
+  color="white"
+  type="ball-clip-rotate-pulse"
+  [fullScreen]="true"
+>
+  <p class="ngx_spinner">Loading...</p>
+</ngx-spinner>
+
+<section id="LoginForm" class="pad-top">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-6">
+        <div class="login_form">
+          <h1 class="mb-4">Login</h1>
+          <form [formGroup]="loginForm" (ngSubmit)="submitLogForm(loginForm)">
+
+            <div class="group mb-4">
+              <input
+              formControlName="email"
+                class="form-control mb-2 rounded-0"
+                name="email"
+                type="text"
+                id="email"
+                placeholder="Email"
+              />
+
+              <div
+                  *ngIf="
+                    loginForm.get('email')?.errors != null &&
+                    loginForm.get('email')?.touched
+                  "
+                  class="text-danger"
+              >
+                  <p *ngIf="loginForm.get('email')?.errors?.required">
+                    Email is required
+                  </p>
+                  <p *ngIf="loginForm.get('email')?.errors?.pattern">
+                    Email is invalid
+                  </p>
+              </div>
+            </div>
+
+            <div class="group mb-4">
+              <input
+              formControlName="password"
+                class="form-control mb-2 rounded-0"
+                name="password"
+                type="text"
+                id="password"
+                placeholder="Password"
+              />
+
+              <div
+                  *ngIf="
+                    loginForm.get('password')?.errors != null &&
+                    loginForm.get('password')?.touched
+                  "
+                  class="text-danger"
+                >
+                  <p *ngIf="loginForm.get('password')?.errors?.required">
+                    Password is required
+                  </p>
+                </div>
+            </div>
+
+            <button [disabled]="loginForm.invalid" class="btn btn-danger" type="submit">login</button>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
