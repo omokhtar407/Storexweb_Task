@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [MoviesComponent],
+  declarations: [MoviesComponent ],
   imports: [
     CommonModule,
     LayoutRoutingModule,

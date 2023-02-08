@@ -1,9 +1,9 @@
-import { CategoryService } from '../servies/category.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MoviesService } from '../servies/movies.service';
 import { Component, OnInit } from '@angular/core';
 import { Category, Movie } from '../../model/movie';
+import { ActivatedRoute } from '@angular/router';
 
 declare var $: any;
 
@@ -25,23 +25,42 @@ export class MoviesComponent implements OnInit {
 
   constructor(
     private _MoviesService: MoviesService,
-    private _CategoryService: CategoryService,
+    private  _ActivatedRoute: ActivatedRoute,
     private toastr: ToastrService
   ) {}
 
   /* ********** Start ********** */
   AllMovies() {
-    this._MoviesService.getAllMovies().subscribe((res) => {
-      this.allMovies = res.message;
-    });
+    this._ActivatedRoute.data.subscribe((res)=>{
+      if (res.movies != `No Movies`) {
+        this.allMovies = res.movies.message;
+      } else {
+        this.toastr.error('No Movies Available Now', '', {
+          positionClass: 'toast-top-right',
+          timeOut: 2500,
+        });
+      }
+    })
   }
   /* ********** End ********** */
 
   /* ********** Start ********** */
   AllCategories() {
-    this._CategoryService.getCategory().subscribe((res) => {
-      this.allCategories = res.message;
-    });
+
+    this._ActivatedRoute.data.subscribe((res)=>{
+      if (res.category != `No Categories`) {
+        this.allCategories = res.categories.message;
+      } else {
+        this.toastr.error('No Categories Available Now', '', {
+          positionClass: 'toast-top-right',
+          timeOut: 2500,
+        });
+      }
+    })
+
+    // this._CategoryService.getCategory().subscribe((res) => {
+    //   this.allCategories = res.message;
+    // });
   }
   /* ********** End ********** */
 

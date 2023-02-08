@@ -11,7 +11,7 @@
   }
 }
 @media (min-width: 767px) {
-  .navbar-nav{
+  .navbar-nav {
     align-items: center;
   }
 }
@@ -24,7 +24,7 @@
 .navbar-brand:hover {
   color: var(--whiteColor) !important;
 }
-.navbar-brand > img{
+.navbar-brand > img {
   width: 130px;
 }
 .nav-link {
@@ -34,7 +34,7 @@
   font-weight: 700;
   border-radius: 0.5rem;
 }
-.nav-link:hover{
+.nav-link:hover {
   color: var(--mainColor) !important;
 }
 @media (max-width: 992px) {
@@ -55,6 +55,10 @@
 @media (max-width: 767px) {
   .collapse {
     background-color: var(--blackColor_50);
+  }
+  .navbar-nav .main_btn {
+    display: block;
+    text-align: center;
   }
 }
 /* End Nav */
