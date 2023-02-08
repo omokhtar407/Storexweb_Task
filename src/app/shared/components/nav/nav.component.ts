@@ -1,17 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../authentication.service';
-declare var $:any;
+import { AuthenticationService } from '../../../auth/services/authentication.service';
+declare var $: any;
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
-  styleUrls: ['./nav.component.css']
+  styleUrls: ['./nav.component.css'],
 })
 export class NavComponent implements OnInit {
-  
   isLogin: boolean = false;
   isToggle: boolean = false;
 
-  constructor(private _AuthService:AuthenticationService) { }
+  constructor(private _AuthService: AuthenticationService) {}
 
   showCollapse() {
     $('button').next('.collapse').slideToggle(300);
@@ -22,7 +21,7 @@ export class NavComponent implements OnInit {
     $('.collapse').fadeOut(300);
     this.isToggle = false;
   }
-  logout(){
+  logout() {
     this._AuthService.logout();
   }
   ngOnInit(): void {
@@ -34,5 +33,4 @@ export class NavComponent implements OnInit {
       }
     });
   }
-
 }

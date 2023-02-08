@@ -1,7 +1,7 @@
 <!-- Start Nav -->
 <nav class="navbar navbar-expand-md position-fixed w-100">
   <div class="container">
-    <a class="navbar-brand"  routerLink="">
+    <a class="navbar-brand"  routerLink="/layout/movies">
       Movies
     </a>
     <button class="navbar-toggler border-0" type="button">
@@ -25,7 +25,7 @@
             (click) ="hideCollapse()"
             *ngIf="isLogin"
             class="nav-link "
-            routerLink="movies"
+            routerLink="/layout/movies"
           >Movies</a>
         </li>
       </ul>
@@ -44,7 +44,7 @@
           (click)="hideCollapse()"
             class="active main_btn"
             aria-current="page"
-            routerLink="register"
+            routerLink="/register"
           >Register</a>
         </li>
         <li class="nav-item m-1">
@@ -52,7 +52,7 @@
           *ngIf="!isLogin"
           (click)="hideCollapse()"
             class="main_btn"
-            routerLink="login"
+            routerLink="/login"
           >Login</a>
         </li>
       </ul>

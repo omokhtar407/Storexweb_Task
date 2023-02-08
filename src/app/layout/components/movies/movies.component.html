@@ -1,12 +1,4 @@
-<ngx-spinner
-  bdColor="#000"
-  size="medium"
-  color="white"
-  type="ball-clip-rotate-pulse"
-  [fullScreen]="true"
->
-  <p class="ngx_spinner">Loading...</p>
-</ngx-spinner>
+
 
 <section class="pad-top">
   <div class="container">
@@ -82,12 +74,16 @@
               </div>
 
               <div class="col-md-12">
-                <div><img class="imgUploaded mb-2" [src]="url_upload_img" *ngIf="url_upload_img" [alt]="url_upload_img"></div>
+                <div>
+                  <label for="file-input" >
+                    <img  class="imgUploaded mb-2" [src]="url_upload_img" *ngIf="url_upload_img" [alt]="url_upload_img">
+                  </label>
+                </div>
                 <div [innerHtml]='img_upload_Msg' *ngIf="img_upload_Msg" [ngClass]="img_upload_Msg ? 'text-danger' : '' "></div>
 
               </div>
               <div class="col-md-12">
-                <input formControlName = 'image' type="file" (change)="selectFile($event)"  placeholder="Choose Image" class="form-control my-3 rounded-0">
+                <input hidden id="file-input" formControlName="image" type="file" (change)="selectFile($event)"  placeholder="Choose Image" class="form-control my-3 rounded-0">
               </div>
               <div class="col-md-12">
                 <textarea formControlName = 'description' placeholder="Movie Description" class="form-control my-3 rounded-0" cols="20" rows="5"></textarea>
@@ -161,12 +157,16 @@
               </div>
 
               <div class="col-md-12">
-                <div><img class="imgUploaded mb-2"  [src]="url_upload_img" *ngIf="url_upload_img" [alt]="url_upload_img"></div>
+                <div>
+                  <label for="file-input" >
+                    <img  class="imgUploaded mb-2" [src]="url_upload_img" *ngIf="url_upload_img" [alt]="url_upload_img">
+                  </label>
+                </div>
                 <div [innerHtml]='img_upload_Msg' *ngIf="img_upload_Msg" [ngClass]="img_upload_Msg ? 'text-danger' : '' "></div>
 
               </div>
               <div class="col-md-12">
-                <input formControlName = 'image' type="file" (change)="selectFile($event)"  placeholder="Choose Image" class="form-control my-3 rounded-0">
+                <input hidden  id="file-input"  type="file" (change)="selectFile($event)"  accept="image/*" placeholder="Choose Image" class="form-control my-3 rounded-0">
               </div>
               <div class="col-md-12">
                 <textarea formControlName = 'description' placeholder="Movie Description" class="form-control my-3 rounded-0" cols="20" rows="5"></textarea>
